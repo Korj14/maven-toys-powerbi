@@ -1,4 +1,3 @@
-If you use this project, please cite
 [![DOI](https://zenodo.org/badge/1449593129.svg)](https://doi.org/10.5281/zenodo.24056033)
 
 # Maven Toys | Sales & Inventory Analytics
