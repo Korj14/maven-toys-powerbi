@@ -1,3 +1,6 @@
+If you use this project, please cite
+[![DOI](https://zenodo.org/badge/1449593129.svg)](https://doi.org/10.5281/zenodo.24056033)
+
 # Maven Toys | Sales & Inventory Analytics
 
 A three-page **Power BI Desktop** portfolio project analyzing sales, product profitability, store performance, and stock availability for Maven Toys, a **fictional** toy retailer in Mexico.
