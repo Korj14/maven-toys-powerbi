@@ -1,0 +1,22 @@
+
+cff-version: 1.2.0
+message: "If you use this project, please cite it."
+title: "Maven Toys: Sales and Inventory Analytics"
+type: software
+authors:
+  - family-names: "Al-korj"
+    given-names: "Mohammad"
+version: 1.0.0
+date-released: 2026-11-08
+abstract: >-
+  An interactive Power BI dashboard analyzing
+  retail sales, product profitability, store
+  performance, and inventory availability
+  using the Maven Toys dataset.
+keywords:
+  - Power BI
+  - Business Intelligence
+  - DAX
+  - Data Visualization
+  - Retail Analytics
+  - Inventory Analysis
