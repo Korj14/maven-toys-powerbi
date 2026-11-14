@@ -1,0 +1,104 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "5baf512c94a3e0c026eb",
+  "position": {
+    "x": 16,
+    "y": 208,
+    "z": 8000,
+    "height": 416,
+    "width": 960,
+    "tabOrder": 8000
+  },
+  "visual": {
+    "visualType": "clusteredColumnChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Products"
+                    }
+                  },
+                  "Property": "Product_Category"
+                }
+              },
+              "queryRef": "Products.Product_Category",
+              "nativeQueryRef": "Product_Category",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Forecast_28D"
+                    }
+                  },
+                  "Property": "Forecast Units (28D)"
+                }
+              },
+              "queryRef": "Forecast_28D.Forecast Units (28D)",
+              "nativeQueryRef": "Forecast Units (28D)"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Forecast_28D"
+                    }
+                  },
+                  "Property": "Previous 28D Units"
+                }
+              },
+              "queryRef": "Forecast_28D.Previous 28D Units",
+              "nativeQueryRef": "Previous 28D Units"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Forecast_28D"
+                  }
+                },
+                "Property": "Forecast Units (28D)"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Forecast vs. previous period by category'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

@@ -1,0 +1,161 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "40e678a0a133ed060530",
+  "position": {
+    "x": 992,
+    "y": 640,
+    "z": 11000,
+    "height": 416,
+    "width": 912,
+    "tabOrder": 11000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Stores"
+                    }
+                  },
+                  "Property": "Store_Name"
+                }
+              },
+              "queryRef": "Stores.Store_Name",
+              "nativeQueryRef": "Store_Name"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Products"
+                    }
+                  },
+                  "Property": "Product_Name"
+                }
+              },
+              "queryRef": "Products.Product_Name",
+              "nativeQueryRef": "Product_Name"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Forecast_28D"
+                    }
+                  },
+                  "Property": "Forecast Units (28D)"
+                }
+              },
+              "queryRef": "Forecast_28D.Forecast Units (28D)",
+              "nativeQueryRef": "Forecast Units (28D)"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Forecast_28D"
+                    }
+                  },
+                  "Property": "Forecast Revenue (28D)"
+                }
+              },
+              "queryRef": "Forecast_28D.Forecast Revenue (28D)",
+              "nativeQueryRef": "Forecast Revenue (28D)"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Forecast_28D"
+                    }
+                  },
+                  "Property": "Forecast Gross Profit (28D)"
+                }
+              },
+              "queryRef": "Forecast_28D.Forecast Gross Profit (28D)",
+              "nativeQueryRef": "Forecast Gross Profit (28D)"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Forecast_28D"
+                  }
+                },
+                "Property": "Forecast Units (28D)"
+              }
+            },
+            "direction": "Descending"
+          }
+        ]
+      }
+    },
+    "objects": {
+      "columnHeaders": [
+        {
+          "properties": {
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Store–Product Demand Forecast'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "stylePreset": [
+        {
+          "properties": {
+            "name": {
+              "expr": {
+                "Literal": {
+                  "Value": "'AlternatingRowsNew'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

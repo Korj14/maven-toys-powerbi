@@ -1,0 +1,97 @@
+table Forecast_Backtest_Metrics
+	lineageTag: f406cdfd-80a6-4a75-8cc4-b7be9620ce58
+
+	measure 'Exploratory Holdout WAPE' =
+			
+			CALCULATE(
+			    MAX('Forecast_Backtest_Metrics'[WAPE]),
+			    'Forecast_Backtest_Metrics'[Evaluation_Set] = "holdout_seen_before",
+			    'Forecast_Backtest_Metrics'[Method] = "pooled_blend_50"
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 796f6d6c-00a9-4683-93ab-dcea2bdf08e9
+
+	column Evaluation_Set
+		dataType: string
+		lineageTag: e8d0c3c6-41d6-40fe-be8c-a0ad6215ab35
+		summarizeBy: none
+		sourceColumn: Evaluation_Set
+
+		annotation SummarizationSetBy = Automatic
+
+	column Method
+		dataType: string
+		lineageTag: 0bd55c33-e3a4-4866-923c-af83dc17ffac
+		summarizeBy: none
+		sourceColumn: Method
+
+		annotation SummarizationSetBy = Automatic
+
+	column WAPE
+		dataType: double
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 030fcc1a-abe0-4e80-a3ba-b6d8a536eff3
+		summarizeBy: sum
+		sourceColumn: WAPE
+
+		annotation SummarizationSetBy = Automatic
+
+	column MAE_Units_28D
+		dataType: double
+		formatString: 0.00
+		lineageTag: fb56a8d3-9c18-40ff-aed8-846dc6af50e0
+		summarizeBy: sum
+		sourceColumn: MAE_Units_28D
+
+		annotation SummarizationSetBy = Automatic
+
+	column Bias_Units_28D
+		dataType: double
+		formatString: 0.00
+		lineageTag: 92030a1e-cc8c-4881-aa06-02249766a5da
+		summarizeBy: sum
+		sourceColumn: Bias_Units_28D
+
+		annotation SummarizationSetBy = Automatic
+
+	column Total_Actual_Units
+		dataType: int64
+		formatString: 0
+		lineageTag: 3ac2bded-9eb8-45ab-a914-93706d2eaeee
+		summarizeBy: sum
+		sourceColumn: Total_Actual_Units
+
+		annotation SummarizationSetBy = Automatic
+
+	column Total_Forecast_Units
+		dataType: double
+		formatString: 0.00
+		lineageTag: 337ad16f-c584-4691-931f-22a8a2734581
+		summarizeBy: sum
+		sourceColumn: Total_Forecast_Units
+
+		annotation SummarizationSetBy = Automatic
+
+	column Series_Windows
+		dataType: int64
+		formatString: 0
+		lineageTag: ed63ce76-2e96-4605-8704-f46f648b8422
+		summarizeBy: sum
+		sourceColumn: Series_Windows
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Forecast_Backtest_Metrics = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Dev\maven_toys_extension\outputs_v03\Forecast_Backtest_Metrics.csv"),[Delimiter=",", Columns=8, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Evaluation_Set", type text}, {"Method", type text}, {"WAPE", type number}, {"MAE_Units_28D", type number}, {"Bias_Units_28D", type number}, {"Total_Actual_Units", Int64.Type}, {"Total_Forecast_Units", type number}, {"Series_Windows", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,67 @@
+table Stores
+	lineageTag: c996a3f2-7244-4ef3-be33-676a10f7f34e
+
+	column Store_ID
+		dataType: int64
+		formatString: 0
+		lineageTag: 820cbc57-cd26-45c2-bcfd-ce14c96d5622
+		summarizeBy: none
+		sourceColumn: Store_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Store_Name
+		dataType: string
+		lineageTag: b88c7667-ddab-4d1b-b7d9-9273e3101879
+		summarizeBy: none
+		sourceColumn: Store_Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Store_City
+		dataType: string
+		lineageTag: c045ba63-0248-4bd2-a1ac-4cae434de93f
+		summarizeBy: none
+		sourceColumn: Store_City
+
+		annotation SummarizationSetBy = Automatic
+
+	column Store_Location
+		dataType: string
+		lineageTag: 4c92ffe0-eca4-400c-a1ec-382a109fc312
+		summarizeBy: none
+		sourceColumn: Store_Location
+
+		annotation SummarizationSetBy = Automatic
+
+	column Store_Open_Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: b5582b9b-e0cf-4eed-98e5-4465f7d29f38
+		summarizeBy: none
+		sourceColumn: Store_Open_Date
+
+		variation Variation
+			isDefault
+			relationship: 8b9fb90d-6de7-456f-8f4a-9c3810ced0d5
+			defaultHierarchy: LocalDateTable_a7208764-c291-4855-82d4-27a8db029f48.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition Stores = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Dev\mexico-toy-sales-powerbi\data\stores.csv"),[Delimiter=",", Columns=5, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Store_ID", Int64.Type}, {"Store_Name", type text}, {"Store_City", type text}, {"Store_Location", type text}, {"Store_Open_Date", type date}}),
+				    #"Trimmed Text" = Table.TransformColumns(#"Changed Type",{{"Store_Name", Text.Trim, type text}, {"Store_City", Text.Trim, type text}, {"Store_Location", Text.Trim, type text}})
+				in
+				    #"Trimmed Text"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,124 @@
+table Inventory
+	lineageTag: 8d2fce2a-91d5-4e95-8dd3-f39f0c431791
+
+	measure 'Total Stock Units' = ```
+			
+			SUM(Inventory[Stock_On_Hand])
+			
+			```
+		formatString: 0
+		lineageTag: 68619d77-af01-4837-8cb7-24d858ddb623
+
+	measure 'Inventory Value' = ```
+			
+			SUMX(
+			    Inventory,
+			    Inventory[Stock_On_Hand]
+			        * RELATED(Products[Product_Cost])
+			)
+			
+			```
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		lineageTag: 38de14f4-5905-429f-9690-b7c845b370d1
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Out of Stock Combinations' = ```
+			
+			CALCULATE(
+			    COUNTROWS(Inventory),
+			    Inventory[Stock_On_Hand] = 0
+			)
+			
+			```
+		formatString: 0
+		lineageTag: d1a4d170-006c-4872-a115-d08659cfaf89
+
+	measure 'Low Stock Combinations' = ```
+			
+			CALCULATE(
+			    COUNTROWS(Inventory),
+			    Inventory[Stock_On_Hand] > 0,
+			    Inventory[Stock_On_Hand] <= 10
+			)
+			
+			```
+		formatString: 0
+		lineageTag: 4d6917e3-7940-4cf9-b632-f4dbc010cbc3
+
+	measure 'Inventory Combinations' = ```
+			
+			COUNTROWS(Inventory)
+			
+			```
+		formatString: 0
+		lineageTag: bbbe6a3e-d359-43bf-8770-6f633753998e
+
+	measure 'Out of Stock Rate' = ```
+			
+			DIVIDE(
+			    [Out of Stock Combinations],
+			    [Inventory Combinations],
+			    0
+			)
+			
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 7d4dad98-607f-4d09-9d0a-d2eb7171b470
+
+	column Store_ID
+		dataType: int64
+		formatString: 0
+		lineageTag: 42ed0112-de6b-42ae-bc0b-8b8be5999f91
+		summarizeBy: none
+		sourceColumn: Store_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Product_ID
+		dataType: int64
+		formatString: 0
+		lineageTag: a5f63da3-fc00-4880-97d0-81a9531c4913
+		summarizeBy: none
+		sourceColumn: Product_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Stock_On_Hand
+		dataType: int64
+		formatString: 0
+		lineageTag: 926f509e-3f45-4409-aba2-1010b3ca4223
+		summarizeBy: sum
+		sourceColumn: Stock_On_Hand
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Stock Status' = ```
+			
+			SWITCH(
+			    TRUE(),
+			    Inventory[Stock_On_Hand] = 0, "Out of Stock",
+			    Inventory[Stock_On_Hand] <= 10, "Low Stock",
+			    "In Stock"
+			)
+			
+			```
+		lineageTag: 8811a257-5134-4615-931f-a26fb19e9a96
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Inventory = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Dev\mexico-toy-sales-powerbi\data\inventory.csv"),[Delimiter=",", Columns=3, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Store_ID", Int64.Type}, {"Product_ID", Int64.Type}, {"Stock_On_Hand", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

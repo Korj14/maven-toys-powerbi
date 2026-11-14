@@ -1,0 +1,75 @@
+relationship 8b9fb90d-6de7-456f-8f4a-9c3810ced0d5
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Stores.Store_Open_Date
+	toColumn: LocalDateTable_a7208764-c291-4855-82d4-27a8db029f48.Date
+
+relationship AutoDetected_228e14d1-39e4-4ddd-830c-f8f25da9156f
+	fromColumn: Sales.Store_ID
+	toColumn: Stores.Store_ID
+
+relationship AutoDetected_1d918ad1-da4b-4bad-8954-f81ac76566d0
+	fromColumn: Inventory.Store_ID
+	toColumn: Stores.Store_ID
+
+relationship AutoDetected_b50cfce2-b498-4e1e-8d88-4257418e432e
+	fromColumn: Sales.Product_ID
+	toColumn: Products.Product_ID
+
+relationship AutoDetected_03b04c71-6816-4c60-bb20-da90c1b14aea
+	fromColumn: Inventory.Product_ID
+	toColumn: Products.Product_ID
+
+relationship be4dcecb-9ea8-b9a8-1974-583a02dfa9d3
+	fromColumn: Sales.Date
+	toColumn: Calendar.Date
+
+relationship 33c838ad-86cd-4fd0-9c07-288c1fffa97f
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Forecast_28D.Forecast_Origin
+	toColumn: LocalDateTable_5db78119-6eb0-4a99-ac4b-28a9a2c71de0.Date
+
+relationship 63d24eaf-43c1-4318-9318-738d62116088
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Forecast_28D.Forecast_Start
+	toColumn: LocalDateTable_b5e01582-ce65-4c53-a92a-86e108849e9c.Date
+
+relationship f4d85378-41b6-4923-881a-f3e2d56ba312
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Forecast_28D.Forecast_End
+	toColumn: LocalDateTable_65428d36-d05b-437a-9cdc-19fbfbe114df.Date
+
+relationship AutoDetected_121f4676-23b8-4b9e-a747-175a1cb3c122
+	fromColumn: Forecast_28D.Store_ID
+	toColumn: Stores.Store_ID
+
+relationship AutoDetected_e4f8cfae-77dd-4e31-afc2-903d406205cf
+	fromColumn: Forecast_28D.Product_ID
+	toColumn: Products.Product_ID
+
+relationship b40ee1ae-427f-4ed7-84db-14e599fa2b91
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Replenishment_Recommendations.Forecast_Origin
+	toColumn: LocalDateTable_150a39ec-941e-4b50-bafa-7fe67312907a.Date
+
+relationship 9e2945b2-6cc4-4a72-ae4c-bc679e9a2e55
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Replenishment_Recommendations.Forecast_Start
+	toColumn: LocalDateTable_42820ca3-4875-4ae4-9e70-ad2f9b2d8ab1.Date
+
+relationship fde89a79-3f9b-4ae9-9b30-5363c898404f
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Replenishment_Recommendations.Forecast_End
+	toColumn: LocalDateTable_296bcda8-40cb-467c-b5c0-2c4514a62aaa.Date
+
+relationship AutoDetected_c8903e0d-a0c4-414e-aae6-5485162cd06f
+	fromColumn: Replenishment_Recommendations.Store_ID
+	toColumn: Stores.Store_ID
+
+relationship AutoDetected_f0fe6cfa-0287-4275-b0e2-33d75f28a934
+	fromColumn: Replenishment_Recommendations.Product_ID
+	toColumn: Products.Product_ID
+
+relationship AutoDetected_de8014ed-4836-4ffe-bd2d-1b2b5472a30f
+	fromColumn: Replenishment_Recommendations.Scenario_ID
+	toColumn: Scenario_Assumptions.Scenario_ID
+

@@ -1,0 +1,35 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-GB
+	valueFilterBehavior: independent
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["Sales","Products","Stores","Inventory","Forecast_28D","Forecast_Backtest_Metrics","Scenario_Assumptions","Replenishment_Recommendations"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table Sales
+ref table DateTableTemplate_22f95e33-bf42-41c9-bc2b-f91270c81ca1
+ref table Products
+ref table Stores
+ref table LocalDateTable_a7208764-c291-4855-82d4-27a8db029f48
+ref table Inventory
+ref table Calendar
+ref table Forecast_28D
+ref table LocalDateTable_5db78119-6eb0-4a99-ac4b-28a9a2c71de0
+ref table LocalDateTable_b5e01582-ce65-4c53-a92a-86e108849e9c
+ref table LocalDateTable_65428d36-d05b-437a-9cdc-19fbfbe114df
+ref table Forecast_Backtest_Metrics
+ref table Scenario_Assumptions
+ref table Replenishment_Recommendations
+ref table LocalDateTable_150a39ec-941e-4b50-bafa-7fe67312907a
+ref table LocalDateTable_42820ca3-4875-4ae4-9e70-ad2f9b2d8ab1
+ref table LocalDateTable_296bcda8-40cb-467c-b5c0-2c4514a62aaa
+
+ref cultureInfo en-US
+

@@ -1,0 +1,273 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "46b9db36d50cc40892e1",
+  "position": {
+    "x": 640,
+    "y": 560,
+    "z": 10001,
+    "height": 512,
+    "width": 1264,
+    "tabOrder": 10001
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Stores"
+                    }
+                  },
+                  "Property": "Store_Name"
+                }
+              },
+              "queryRef": "Stores.Store_Name",
+              "nativeQueryRef": "Store_Name"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Products"
+                    }
+                  },
+                  "Property": "Product_Name"
+                }
+              },
+              "queryRef": "Products.Product_Name",
+              "nativeQueryRef": "Product_Name"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Replenishment_Recommendations"
+                        }
+                      },
+                      "Property": "Stock_On_Hand"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(Replenishment_Recommendations.Stock_On_Hand)",
+              "nativeQueryRef": "Sum of Stock_On_Hand"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Replenishment_Recommendations"
+                    }
+                  },
+                  "Property": "Reorder Units"
+                }
+              },
+              "queryRef": "Replenishment_Recommendations.Reorder Units",
+              "nativeQueryRef": "Reorder Units"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Replenishment_Recommendations"
+                    }
+                  },
+                  "Property": "Replenishment Budget Used"
+                }
+              },
+              "queryRef": "Replenishment_Recommendations.Replenishment Budget Used",
+              "nativeQueryRef": "Replenishment Budget Used"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Replenishment_Recommendations"
+                    }
+                  },
+                  "Property": "Modeled Shortage Units Avoided"
+                }
+              },
+              "queryRef": "Replenishment_Recommendations.Modeled Shortage Units Avoided",
+              "nativeQueryRef": "Modeled Shortage Units Avoided"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Replenishment_Recommendations"
+                    }
+                  },
+                  "Property": "Modeled Gross Profit Protected"
+                }
+              },
+              "queryRef": "Replenishment_Recommendations.Modeled Gross Profit Protected",
+              "nativeQueryRef": "Modeled Gross Profit Protected"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Replenishment_Recommendations"
+                  }
+                },
+                "Property": "Replenishment Budget Used"
+              }
+            },
+            "direction": "Descending"
+          }
+        ]
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Recommended Replenishment Actions'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "03f6cef07377de791de8",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Stores"
+              }
+            },
+            "Property": "Store_Name"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "391beedf302517ac4502",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Products"
+              }
+            },
+            "Property": "Product_Name"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "4a1c5666d0de03032493",
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Replenishment_Recommendations"
+                  }
+                },
+                "Property": "Stock_On_Hand"
+              }
+            },
+            "Function": 0
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "5217c06bb68270aeae2a",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Replenishment_Recommendations"
+              }
+            },
+            "Property": "Reorder Units"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "457bc5c090c0b76708cc",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Replenishment_Recommendations"
+              }
+            },
+            "Property": "Replenishment Budget Used"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "1204ff4244b81063b91b",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Replenishment_Recommendations"
+              }
+            },
+            "Property": "Modeled Shortage Units Avoided"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "797a0fc409b746d51209",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Replenishment_Recommendations"
+              }
+            },
+            "Property": "Modeled Gross Profit Protected"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}

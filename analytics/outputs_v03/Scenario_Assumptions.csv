@@ -1,0 +1,4 @@
+Scenario_ID,Lead_Time_Days,Review_Period_Days,Target_Service_Level,Purchase_Budget_USD,Assumption_Status
+S1_Lean,7,7,0.9,15000.0,"Illustrative, not observed"
+S2_Base,7,7,0.95,25000.0,"Illustrative, not observed"
+S3_Resilience,14,7,0.98,40000.0,"Illustrative, not observed"
