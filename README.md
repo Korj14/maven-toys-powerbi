@@ -123,8 +123,6 @@ maven-toys-powerbi/
 ├── Maven_Toys_Dashboard_v2.SemanticModel/
 ├── README.md
 ├── CITATION.cff
-├── Maven_Toys_Dashboard_v2.pbix
-├── Maven_Toys_Dashboard_v2.pdf
 ├── data/
 │   ├── sales.csv
 │   ├── products.csv
