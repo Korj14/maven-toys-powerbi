@@ -1,0 +1,61 @@
+table Products
+	lineageTag: c650e549-f9a1-42f5-ac9e-6ec3b3291c1a
+
+	column Product_ID
+		dataType: int64
+		formatString: 0
+		lineageTag: 8a7d9424-e457-405d-ad74-fee7a343e0e7
+		summarizeBy: none
+		sourceColumn: Product_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Product_Name
+		dataType: string
+		lineageTag: 42ef3578-9ee1-4f89-8dca-a8c4e8b3ae3f
+		summarizeBy: none
+		sourceColumn: Product_Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Product_Category
+		dataType: string
+		lineageTag: f0c55dde-42dd-4f6b-baeb-ff9ed6e0f28a
+		summarizeBy: none
+		sourceColumn: Product_Category
+
+		annotation SummarizationSetBy = Automatic
+
+	column Product_Cost
+		dataType: string
+		lineageTag: f4aeba65-b14d-4ba3-83b6-e62e4c910944
+		summarizeBy: none
+		sourceColumn: Product_Cost
+
+		annotation SummarizationSetBy = Automatic
+
+	column Product_Price
+		dataType: string
+		lineageTag: 3192b2a9-b45c-40ab-8466-87a8cd55f5c1
+		summarizeBy: none
+		sourceColumn: Product_Price
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Products = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Dev\mexico-toy-sales-powerbi\data\products.csv"),[Delimiter=",", Columns=5, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Product_ID", Int64.Type}, {"Product_Name", type text}, {"Product_Category", type text}, {"Product_Cost", type text}, {"Product_Price", type text}}),
+				    #"Replaced Value1" = Table.ReplaceValue(#"Changed Type","$","",Replacer.ReplaceText,{"Product_Price"}),
+				    #"Replaced Value2" = Table.ReplaceValue(#"Replaced Value1","$","",Replacer.ReplaceText,{"Product_Cost"}),
+				    #"Trimmed Text" = Table.TransformColumns(#"Replaced Value2",{{"Product_Name", Text.Trim, type text}, {"Product_Category", Text.Trim, type text}})
+				in
+				    #"Trimmed Text"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

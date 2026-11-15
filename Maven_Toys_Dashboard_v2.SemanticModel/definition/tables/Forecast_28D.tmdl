@@ -1,0 +1,212 @@
+table Forecast_28D
+	lineageTag: 60aa2e1d-3687-4838-89d1-edc8ed9af8a2
+
+	measure 'Forecast Units (28D)' =
+			
+			SUM('Forecast_28D'[Forecast_Units_28D])
+		formatString: 0.00
+		lineageTag: 90c9f35e-661d-40e4-a2e7-f940daf31ccd
+
+	measure 'Forecast Revenue (28D)' =
+			
+			SUM('Forecast_28D'[Forecast_Revenue_USD])
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		lineageTag: 2c43e86b-f59c-43f2-9e59-6936573ffece
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Forecast Gross Profit (28D)' =
+			
+			SUM('Forecast_28D'[Forecast_Gross_Profit_USD])
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		lineageTag: 196e4df4-520b-4e34-b1b4-490ead27a2bb
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Forecast Gross Margin %' =
+			
+			DIVIDE(
+			    [Forecast Gross Profit (28D)],
+			    [Forecast Revenue (28D)]
+			)
+		formatString: #,0.00%;-#,0.00%;#,0.00%
+		lineageTag: 3111fe54-b48f-44c3-8aa4-de993eaa2cf3
+
+	measure 'Previous 28D Units' =
+			
+			SUM('Forecast_28D'[Actual_Units_Previous_28D])
+		formatString: 0
+		lineageTag: 0d28386e-45ec-4432-9e7d-42d00c69a87c
+
+	measure 'Forecast Units Change %' =
+			
+			DIVIDE(
+			    [Forecast Units (28D)] - [Previous 28D Units],
+			    [Previous 28D Units]
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 138ec754-7e64-4663-9007-0fcb44b8cbe5
+
+	column Store_ID
+		dataType: int64
+		formatString: 0
+		lineageTag: df70b1e9-7925-4d79-931f-94c94f0fd5f8
+		summarizeBy: none
+		sourceColumn: Store_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Product_ID
+		dataType: int64
+		formatString: 0
+		lineageTag: 664a73a3-a8e2-44aa-aafe-cbc639ef4670
+		summarizeBy: none
+		sourceColumn: Product_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Forecast_Origin
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: c2af55a7-cb9d-4e4b-bfb5-102fdcd2ea45
+		summarizeBy: none
+		sourceColumn: Forecast_Origin
+
+		variation Variation
+			isDefault
+			relationship: 33c838ad-86cd-4fd0-9c07-288c1fffa97f
+			defaultHierarchy: LocalDateTable_5db78119-6eb0-4a99-ac4b-28a9a2c71de0.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Forecast_Start
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 33d1f1f4-09b9-44cc-8cc8-cc1d084a16da
+		summarizeBy: none
+		sourceColumn: Forecast_Start
+
+		variation Variation
+			isDefault
+			relationship: 63d24eaf-43c1-4318-9318-738d62116088
+			defaultHierarchy: LocalDateTable_b5e01582-ce65-4c53-a92a-86e108849e9c.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Forecast_End
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 63616ed8-114c-4dcc-98c7-c35311d2f3c0
+		summarizeBy: none
+		sourceColumn: Forecast_End
+
+		variation Variation
+			isDefault
+			relationship: f4d85378-41b6-4923-881a-f3e2d56ba312
+			defaultHierarchy: LocalDateTable_65428d36-d05b-437a-9cdc-19fbfbe114df.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Forecast_Units_28D
+		dataType: double
+		formatString: 0.00
+		lineageTag: 5319c4e2-033d-45df-83e2-35d1d967fc06
+		summarizeBy: sum
+		sourceColumn: Forecast_Units_28D
+
+		annotation SummarizationSetBy = Automatic
+
+	column Forecast_Std_Units_28D
+		dataType: double
+		formatString: 0.00
+		lineageTag: 8fc06880-4757-4722-b399-a3b54302d390
+		summarizeBy: sum
+		sourceColumn: Forecast_Std_Units_28D
+
+		annotation SummarizationSetBy = Automatic
+
+	column Indicative_Lower_Units_28D
+		dataType: double
+		formatString: 0.00
+		lineageTag: 75ce3cce-011a-4c8a-b1ed-ce73590cbeec
+		summarizeBy: sum
+		sourceColumn: Indicative_Lower_Units_28D
+
+		annotation SummarizationSetBy = Automatic
+
+	column Indicative_Upper_Units_28D
+		dataType: double
+		formatString: 0.00
+		lineageTag: 8775c606-a70f-4a1d-8f67-35c906622584
+		summarizeBy: sum
+		sourceColumn: Indicative_Upper_Units_28D
+
+		annotation SummarizationSetBy = Automatic
+
+	column Actual_Units_Previous_28D
+		dataType: int64
+		formatString: 0
+		lineageTag: 13278c76-0ee9-43a9-b1e4-8fd61a40f6df
+		summarizeBy: sum
+		sourceColumn: Actual_Units_Previous_28D
+
+		annotation SummarizationSetBy = Automatic
+
+	column Forecast_Revenue_USD
+		dataType: decimal
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		lineageTag: 1ebd3576-f7c3-4ee4-8457-2e0d0cf2678e
+		summarizeBy: sum
+		sourceColumn: Forecast_Revenue_USD
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column Forecast_Gross_Profit_USD
+		dataType: decimal
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		lineageTag: 2ac14764-646d-4581-b708-e6baf66f58a0
+		summarizeBy: sum
+		sourceColumn: Forecast_Gross_Profit_USD
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column Selected_Method
+		dataType: string
+		lineageTag: b806a5ba-8712-4aaf-8e14-c5a201fc33b3
+		summarizeBy: none
+		sourceColumn: Selected_Method
+
+		annotation SummarizationSetBy = Automatic
+
+	column Model_Version
+		dataType: string
+		lineageTag: bf889315-ef7a-491d-b774-54b0ba6f9759
+		summarizeBy: none
+		sourceColumn: Model_Version
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Forecast_28D = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Dev\maven_toys_extension\outputs_v03\Forecast_28D.csv"),[Delimiter=",", Columns=14, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Store_ID", Int64.Type}, {"Product_ID", Int64.Type}, {"Forecast_Origin", type date}, {"Forecast_Start", type date}, {"Forecast_End", type date}, {"Forecast_Units_28D", type number}, {"Forecast_Std_Units_28D", type number}, {"Indicative_Lower_Units_28D", type number}, {"Indicative_Upper_Units_28D", type number}, {"Actual_Units_Previous_28D", Int64.Type}, {"Forecast_Revenue_USD", Currency.Type}, {"Forecast_Gross_Profit_USD", Currency.Type}, {"Selected_Method", type text}, {"Model_Version", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

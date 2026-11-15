@@ -6,8 +6,8 @@ type: software
 authors:
   - family-names: "Al-korj"
     given-names: "Mohammad"
-version: 1.0.0
-date-released: 2026-11-08
+version: 2.0.0
+date-released: 2026-11-15
 abstract: >-
   An interactive Power BI dashboard analyzing
   retail sales, product profitability, store

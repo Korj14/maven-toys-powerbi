@@ -1,0 +1,81 @@
+table Scenario_Assumptions
+	lineageTag: bab3a1ee-c3d1-4dee-bfa3-ba7241acb23e
+
+	measure 'Scenario Selected' =
+			
+			IF(
+			    HASONEVALUE('Scenario_Assumptions'[Scenario_ID]),
+			    1,
+			    0
+			)
+		formatString: 0
+		lineageTag: 1b44d4dc-974b-481c-9ebe-6b27e769380d
+
+	column Scenario_ID
+		dataType: string
+		lineageTag: 67a0e034-f4db-4550-98c5-bc16a7b260e3
+		summarizeBy: none
+		sourceColumn: Scenario_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Lead_Time_Days
+		dataType: int64
+		formatString: 0
+		lineageTag: 77c728ff-3c06-4246-9238-509db6c779ad
+		summarizeBy: none
+		sourceColumn: Lead_Time_Days
+
+		annotation SummarizationSetBy = Automatic
+
+	column Review_Period_Days
+		dataType: int64
+		formatString: 0
+		lineageTag: 63943208-ef0d-4aa0-a9d3-db0a5aa61c13
+		summarizeBy: none
+		sourceColumn: Review_Period_Days
+
+		annotation SummarizationSetBy = Automatic
+
+	column Target_Service_Level
+		dataType: double
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 552b8842-6326-4f44-8d2d-dad1c87adfce
+		summarizeBy: none
+		sourceColumn: Target_Service_Level
+
+		annotation SummarizationSetBy = Automatic
+
+	column Purchase_Budget_USD
+		dataType: decimal
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		lineageTag: 8375e1e5-350a-4415-8e40-b09f60ead18b
+		summarizeBy: none
+		sourceColumn: Purchase_Budget_USD
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column Assumption_Status
+		dataType: string
+		lineageTag: 5f615311-36ab-439f-95d8-0e9609edc3f1
+		summarizeBy: none
+		sourceColumn: Assumption_Status
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Scenario_Assumptions = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Dev\maven_toys_extension\outputs_v03\Scenario_Assumptions.csv"),[Delimiter=",", Columns=6, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Scenario_ID", type text}, {"Lead_Time_Days", Int64.Type}, {"Review_Period_Days", Int64.Type}, {"Target_Service_Level", type number}, {"Purchase_Budget_USD", Currency.Type}, {"Assumption_Status", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,82 @@
+table Calendar
+	lineageTag: debd09f5-9445-4947-b9d6-8e2c837c531e
+	dataCategory: Time
+
+	column Date
+		isKey
+		formatString: General Date
+		lineageTag: bf7ac602-b9d5-4d66-9d40-5dfef96cb915
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Date]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year
+		formatString: 0
+		lineageTag: e4f98858-2bd9-47e8-b910-71264509448d
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Year]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Month Number'
+		formatString: 0
+		lineageTag: ac3fc3fb-349a-4004-9b5b-76bbccf1a74a
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Month Number]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Month Name'
+		lineageTag: 7bba668d-161f-4097-8e85-d99d327dc32c
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Month Name]
+		sortByColumn: 'Month Number'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Month Year'
+		lineageTag: 1b70658a-55ec-4caa-9a62-29bb9235f044
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Month Year]
+		sortByColumn: 'Year Month Sort'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Year Month Sort'
+		formatString: 0
+		lineageTag: b8b1cf73-bcbd-497c-9c15-422b2c0c2241
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Year Month Sort]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Calendar = calculated
+		mode: import
+		source = ```
+				
+				VAR FirstYear = YEAR(MIN(Sales[Date]))
+				VAR LastYear = YEAR(MAX(Sales[Date]))
+				RETURN
+				ADDCOLUMNS(
+				    CALENDAR(
+				        DATE(FirstYear, 1, 1),
+				        DATE(LastYear, 12, 31)
+				    ),
+				    "Year", YEAR([Date]),
+				    "Month Number", MONTH([Date]),
+				    "Month Name", FORMAT([Date], "MMM"),
+				    "Month Year", FORMAT([Date], "MMM yyyy"),
+				    "Year Month Sort", YEAR([Date]) * 100 + MONTH([Date])
+				)
+				
+				```
+
+	annotation PBI_Id = 9e206e4b581848268e4eb11b227cc17e
+

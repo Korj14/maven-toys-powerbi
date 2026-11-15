@@ -1,0 +1,463 @@
+table Replenishment_Recommendations
+	lineageTag: 3a1e6f01-f6d4-466b-ab7d-0a30148b437c
+
+	measure 'Reorder Units' =
+			
+			IF(
+			    [Scenario Selected] = 1,
+			    SUM('Replenishment_Recommendations'[Budgeted_Order_Units]),
+			    BLANK()
+			)
+		formatString: 0
+		lineageTag: 19d91d06-46ce-436a-bc0e-0588611794ba
+
+	measure 'Replenishment Budget Used' =
+			
+			IF(
+			    [Scenario Selected] = 1,
+			    SUM('Replenishment_Recommendations'[Recommended_Spend_USD]),
+			    BLANK()
+			)
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		lineageTag: 98f4cd2a-d057-4e62-aefa-742c506022d2
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Modeled Shortage Units Avoided' =
+			
+			IF(
+			    [Scenario Selected] = 1,
+			    SUM('Replenishment_Recommendations'[Modeled_Avoided_Shortage_Units]),
+			    BLANK()
+			)
+		formatString: 0.00
+		lineageTag: a9bdcd44-4944-4745-ba6f-f54e46be58ea
+
+	measure 'Modeled Gross Profit Protected' =
+			
+			IF(
+			    [Scenario Selected] = 1,
+			    SUM('Replenishment_Recommendations'[Modeled_Protected_Gross_Profit_USD]),
+			    BLANK()
+			)
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		lineageTag: 8683c7e5-9a9e-414e-b7e7-6b0aa2115832
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Stores Requiring Replenishment' =
+			
+			IF(
+			    [Scenario Selected] = 1,
+			    CALCULATE(
+			        DISTINCTCOUNT('Replenishment_Recommendations'[Store_ID]),
+			        'Replenishment_Recommendations'[Budgeted_Order_Units] > 0
+			    ),
+			    BLANK()
+			)
+		formatString: 0
+		lineageTag: 8f0ca70c-8efa-4e94-b544-cae964fd8218
+
+	measure 'Shortage Without Order' =
+			
+			IF(
+			    [Scenario Selected] = 1,
+			    SUM('Replenishment_Recommendations'[Shortage_Units_No_Order]),
+			    BLANK()
+			)
+		formatString: 0.00
+		lineageTag: cd9bffef-6d34-488b-9af3-f12c9d08ad5e
+
+	measure 'Shortage After Order' =
+			
+			IF(
+			    [Scenario Selected] = 1,
+			    SUM('Replenishment_Recommendations'[Shortage_Units_After_Order]),
+			    BLANK()
+			)
+		formatString: 0.00
+		lineageTag: 02f27348-3dd9-441f-9bf0-74ffc139f3f1
+
+	measure 'Modeled Shortage Reduction %' =
+			
+			DIVIDE(
+			    [Modeled Shortage Units Avoided],
+			    [Shortage Without Order]
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: eb403440-de77-464c-9509-49f651ee6a54
+
+	column Store_ID
+		dataType: int64
+		formatString: 0
+		lineageTag: e9fbd6eb-b35b-4258-9ff8-650c64c52126
+		summarizeBy: none
+		sourceColumn: Store_ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Product_ID
+		dataType: int64
+		formatString: 0
+		lineageTag: 06c011b0-32aa-454a-95fc-52dba29dc676
+		summarizeBy: none
+		sourceColumn: Product_ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Stock_On_Hand
+		dataType: int64
+		formatString: 0
+		lineageTag: dba02895-16a0-4b83-834b-a41042bfcaf6
+		summarizeBy: sum
+		sourceColumn: Stock_On_Hand
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Forecast_Units_28D
+		dataType: double
+		lineageTag: e12aba87-d5ef-44e9-ac44-5a1b145ba8c9
+		summarizeBy: sum
+		sourceColumn: Forecast_Units_28D
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Forecast_Origin
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 150097c5-8ae7-472e-96ba-04b65d3b8cd8
+		summarizeBy: none
+		sourceColumn: Forecast_Origin
+
+		variation Variation
+			isDefault
+			relationship: b40ee1ae-427f-4ed7-84db-14e599fa2b91
+			defaultHierarchy: LocalDateTable_150a39ec-941e-4b50-bafa-7fe67312907a.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Forecast_Start
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 3d6a2547-552c-414b-bcd6-d71f7530ec65
+		summarizeBy: none
+		sourceColumn: Forecast_Start
+
+		variation Variation
+			isDefault
+			relationship: 9e2945b2-6cc4-4a72-ae4c-bc679e9a2e55
+			defaultHierarchy: LocalDateTable_42820ca3-4875-4ae4-9e70-ad2f9b2d8ab1.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Forecast_End
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: e0e807b2-36e7-4b91-9972-6e63bc011f4a
+		summarizeBy: none
+		sourceColumn: Forecast_End
+
+		variation Variation
+			isDefault
+			relationship: fde89a79-3f9b-4ae9-9b30-5363c898404f
+			defaultHierarchy: LocalDateTable_296bcda8-40cb-467c-b5c0-2c4514a62aaa.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Scenario_ID
+		dataType: string
+		lineageTag: 67d9bba8-7267-4fcd-881a-5667da04715c
+		summarizeBy: none
+		sourceColumn: Scenario_ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Mean_Lead_Time_Demand_Units
+		dataType: double
+		lineageTag: d66fd21a-94a2-4e85-9fe2-247c96f7cc86
+		summarizeBy: sum
+		sourceColumn: Mean_Lead_Time_Demand_Units
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Mean_Review_Period_Demand_Units
+		dataType: double
+		lineageTag: d07eb5e8-75f9-4c00-8b08-d916c55a6804
+		summarizeBy: sum
+		sourceColumn: Mean_Review_Period_Demand_Units
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Projected_Stock_At_Receipt_Units
+		dataType: double
+		lineageTag: 77f16635-3410-4109-b4bc-2e1514be965b
+		summarizeBy: sum
+		sourceColumn: Projected_Stock_At_Receipt_Units
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Expected_Shortage_Before_Receipt_Units
+		dataType: double
+		lineageTag: 99598c64-5166-4f64-ab3a-8f67a9e9107c
+		summarizeBy: sum
+		sourceColumn: Expected_Shortage_Before_Receipt_Units
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Expected_Shortage_Review_Without_Order_Units
+		dataType: double
+		lineageTag: a494a2c9-6b50-4243-86a5-c3109245fcc1
+		summarizeBy: sum
+		sourceColumn: Expected_Shortage_Review_Without_Order_Units
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Expected_Shortage_Review_After_Order_Units
+		dataType: double
+		lineageTag: 409c8751-f8a8-465b-a3a9-fe6bcadf8183
+		summarizeBy: sum
+		sourceColumn: Expected_Shortage_Review_After_Order_Units
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Target_Stock_Units
+		dataType: int64
+		formatString: 0
+		lineageTag: bbaca0c6-c363-49c6-aa41-40062624df6b
+		summarizeBy: sum
+		sourceColumn: Target_Stock_Units
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ideal_Order_Units
+		dataType: int64
+		formatString: 0
+		lineageTag: 75c28971-f2c6-4212-b4c1-a32dccbf39be
+		summarizeBy: sum
+		sourceColumn: Ideal_Order_Units
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Budgeted_Order_Units
+		dataType: int64
+		formatString: 0
+		lineageTag: fc0675f5-f3fa-4d01-96b8-c8037d3fcde7
+		summarizeBy: sum
+		sourceColumn: Budgeted_Order_Units
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Unit_Cost
+		dataType: decimal
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		lineageTag: 2d2fc11c-616f-4ea9-9603-ca85429417b4
+		summarizeBy: sum
+		sourceColumn: Unit_Cost
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column Unit_Margin
+		dataType: decimal
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		lineageTag: 6e20be0e-1b33-493c-8ed1-d29aea67de51
+		summarizeBy: sum
+		sourceColumn: Unit_Margin
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column Ideal_Spend_USD
+		dataType: decimal
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		lineageTag: 52f3da2d-4e9d-4405-a16a-c72df89f336b
+		summarizeBy: sum
+		sourceColumn: Ideal_Spend_USD
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column Recommended_Spend_USD
+		dataType: decimal
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		lineageTag: 948609c6-fafc-4853-9a9d-f4dbdd5de57b
+		summarizeBy: sum
+		sourceColumn: Recommended_Spend_USD
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column Shortage_Units_No_Order
+		dataType: double
+		lineageTag: 562a5d73-2997-43ad-83ab-9698b1b0e5b4
+		summarizeBy: sum
+		sourceColumn: Shortage_Units_No_Order
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Shortage_Units_After_Order
+		dataType: double
+		lineageTag: eccfbfab-42ae-4026-8fe7-e3c156cbedb8
+		summarizeBy: sum
+		sourceColumn: Shortage_Units_After_Order
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Modeled_Avoided_Shortage_Units
+		dataType: double
+		lineageTag: c920cf9e-2223-4e00-a636-5e673df9e753
+		summarizeBy: sum
+		sourceColumn: Modeled_Avoided_Shortage_Units
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Modeled_Protected_Gross_Profit_USD
+		dataType: decimal
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		lineageTag: 52da312f-beb4-4bc7-8999-c16f2b5cfdc4
+		summarizeBy: sum
+		sourceColumn: Modeled_Protected_Gross_Profit_USD
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column Lead_Time_Days
+		dataType: int64
+		formatString: 0
+		lineageTag: 965f596d-81c3-48f9-a01e-0cb0d6207402
+		summarizeBy: sum
+		sourceColumn: Lead_Time_Days
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Review_Period_Days
+		dataType: int64
+		formatString: 0
+		lineageTag: 02bd5314-12f2-44a2-8022-6514dbda60eb
+		summarizeBy: sum
+		sourceColumn: Review_Period_Days
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Assumption_Not_Observed
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: baa22f77-f614-4250-82f9-990c3a7ba712
+		summarizeBy: none
+		sourceColumn: Assumption_Not_Observed
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Model_Version
+		dataType: string
+		lineageTag: 02a2cff3-49af-42c3-a2ad-321ee88bf127
+		summarizeBy: none
+		sourceColumn: Model_Version
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Replenishment_Recommendations = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Dev\maven_toys_extension\outputs_v03\Replenishment_Recommendations.csv"),[Delimiter=",", Columns=29, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Store_ID", Int64.Type}, {"Product_ID", Int64.Type}, {"Stock_On_Hand", Int64.Type}, {"Forecast_Units_28D", type number}, {"Forecast_Origin", type date}, {"Forecast_Start", type date}, {"Forecast_End", type date}, {"Scenario_ID", type text}, {"Mean_Lead_Time_Demand_Units", type number}, {"Mean_Review_Period_Demand_Units", type number}, {"Projected_Stock_At_Receipt_Units", type number}, {"Expected_Shortage_Before_Receipt_Units", type number}, {"Expected_Shortage_Review_Without_Order_Units", type number}, {"Expected_Shortage_Review_After_Order_Units", type number}, {"Target_Stock_Units", Int64.Type}, {"Ideal_Order_Units", Int64.Type}, {"Budgeted_Order_Units", Int64.Type}, {"Unit_Cost", Currency.Type}, {"Unit_Margin", Currency.Type}, {"Ideal_Spend_USD", Currency.Type}, {"Recommended_Spend_USD", Currency.Type}, {"Shortage_Units_No_Order", type number}, {"Shortage_Units_After_Order", type number}, {"Modeled_Avoided_Shortage_Units", type number}, {"Modeled_Protected_Gross_Profit_USD", Currency.Type}, {"Lead_Time_Days", Int64.Type}, {"Review_Period_Days", Int64.Type}, {"Assumption_Not_Observed", type logical}, {"Model_Version", type text}})
+				in
+				    #"Changed Type"
+
+	changedProperty = IsHidden
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
