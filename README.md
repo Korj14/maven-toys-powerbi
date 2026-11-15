@@ -1,3 +1,5 @@
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24056033.svg)](https://doi.org/10.5281/zenodo.24056033)
+
 # Maven Toys | Descriptive, Predictive & Prescriptive Analytics
 
 A five-page **Power BI Desktop** portfolio project for a **fictional toy retailer in Mexico**, combining historical sales and inventory reporting, experimental demand forecasting, and forecast-driven replenishment scenarios. Python generates the predictive and prescriptive tables; Power BI presents the results in an interactive semantic model.
