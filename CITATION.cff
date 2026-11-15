@@ -1,18 +1,24 @@
 
 cff-version: 1.2.0
 message: "If you use this project, please cite it."
-title: "Maven Toys: Sales and Inventory Analytics"
-type: software
+title: "Maven Toys: Descriptive, Predictive and Prescriptive Analytics"type: software
 authors:
   - family-names: "Al-korj"
     given-names: "Mohammad"
 version: 2.0.0
 date-released: 2026-11-15
 abstract: >-
-  An interactive Power BI dashboard analyzing
-  retail sales, product profitability, store
-  performance, and inventory availability
-  using the Maven Toys dataset.
+  A five-page Power BI and Python analytics portfolio project
+  using the Maven Toys Mexico Toy Sales dataset. The project
+  integrates descriptive sales and inventory analysis,
+  experimental 28-day demand forecasting, and forecast-driven
+  inventory replenishment simulations under alternative budget
+  and service-level assumptions. It includes an interactive
+  Power BI dashboard, reproducible Python scripts, documented
+  evaluation metrics, and scenario-based recommendations.
+  Predictive and prescriptive results are retrospective
+  simulations intended for analytical demonstration,
+  not operational deployment.
 keywords:
   - Power BI
   - Business Intelligence
